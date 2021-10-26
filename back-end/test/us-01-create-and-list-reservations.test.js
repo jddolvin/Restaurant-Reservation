@@ -12,10 +12,12 @@ describe("US-01 - Create and list reservations", () => {
   });
 
   beforeEach(() => {
+    // console.log("hello seed");
     return knex.seed.run();
   });
 
   afterAll(async () => {
+    // console.log("hello seed");
     return await knex.migrate.rollback(null, true).then(() => knex.destroy());
   });
 
