@@ -186,8 +186,8 @@ async function list(req, res, next) {
 
   if (date) {
     const data = await reservationsService.list(date);
-    console.log("logdat", data);
-    console.log("logdate", date);
+    // console.log("logdat", data);
+    // console.log("logdate", date);
     return res.json({ data: data });
   };
 
