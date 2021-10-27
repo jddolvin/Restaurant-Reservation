@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { listTables } from "../utils/api";
 import axios from "axios";
+import ErrorAlert from "../layout/ErrorAlert";
 
 export default function SeatReservation() {
   const [tables, setTables] = useState([]);
   const [tableId, setTableId] = useState(0);
+  const [tableError, setTableError] = useState(null);
   const { reservation_id } = useParams();
   const history = useHistory();
 
@@ -27,9 +29,30 @@ export default function SeatReservation() {
   const cancelHandler = () => {
     history.goBack();
   };
+  // const validateSeat = () => {
+  //   if (!tableId) {
+  //     foundErrors.push("Table does not exist.");
+  //   }
+  //   if (!reservation_id) {
+  //     foundErrors.push("Reservation does not exist.");
+  //   }
+  //   if (tableId.reservation_id) {
+  //     foundErrors.push("Table selected is occupied.");
+  //   }
+  //   if (tableId.capacity < reservation_id.people) {
+  //     foundErrors.push("Table selected cannot seat number of people.");
+  //   }
+
+  //   if (foundErrors) {
+  //     setErrors(new Error(foundErrors.toString()));
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
   const submitHandler = (event) => {
     event.preventDefault();
+    setTableError(null);
 
     if (reservation_id) {
       axios
@@ -39,7 +62,10 @@ export default function SeatReservation() {
         .then((response) =>
           response.status === 200 ? history.push("/") : null
         )
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error.response.data.error);
+          setTableError({ message: error.response.data.error });
+        });
     }
   };
 
@@ -65,9 +91,9 @@ export default function SeatReservation() {
               name="table_id"
             >
               <option value="">Select A Table</option>
-              {tables.map((table, index) => {
+              {tables.map((table) => {
                 return (
-                  <option key={index} value={table.table_id}>
+                  <option key={table.table_id} value={table.table_id}>
                     {table.table_name} - {table.capacity}
                   </option>
                 );
@@ -87,6 +113,7 @@ export default function SeatReservation() {
           </button>
         </form>
       </div>
+      <ErrorAlert error={tableError} />
     </div>
   );
 }

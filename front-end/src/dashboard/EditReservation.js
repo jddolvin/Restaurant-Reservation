@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
+import ReservationForm from "./ReservationForm";
 
 const EditReservation = () => {
   const [reservation, setReservation] = useState([]);
@@ -109,108 +110,12 @@ const EditReservation = () => {
           Edit Reservation
         </h1>
         {reservation.data && (
-          <form onSubmit={submitHandler} className="mt-2">
-            <div
-              className="form-row font-weight-bold pl-2 pr-2"
-              style={{ color: "#222831" }}
-            >
-              <div className="form-group col-md-6">
-                <label htmlFor="first_name">First Name:</label>
-                <input
-                  type="name"
-                  id="first_name"
-                  name="first_name"
-                  placeholder="John"
-                  className="form-control"
-                  defaultValue={reservation.data.first_name}
-                  onChange={changeHandler}
-                  required
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="last_name">Last Name:</label>
-                <input
-                  type="name"
-                  name="last_name"
-                  placeholder="Doe"
-                  className="form-control"
-                  onChange={changeHandler}
-                  defaultValue={reservation.data.last_name}
-                  required
-                />
-              </div>
-            </div>
-            <div
-              className="form-row font-weight-bold pl-2 pr-2"
-              style={{ color: "#222831" }}
-            >
-              <div className="form-group col-md-6">
-                <label htmlFor="mobile_number">Phone Number:</label>
-                <input
-                  type="tel"
-                  name="mobile_number"
-                  placeholder="123-456-7890"
-                  className="form-control"
-                  onChange={changeHandler}
-                  defaultValue={reservation.data.mobile_number}
-                  required
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="people">Party Size:</label>
-                <input
-                  type="number"
-                  min="1"
-                  name="people"
-                  placeholder="10"
-                  className="form-control"
-                  onChange={changeHandler}
-                  defaultValue={reservation.data.people}
-                  required
-                />
-              </div>
-            </div>
-            <div
-              className="form-row font-weight-bold pl-2 pr-2"
-              style={{ color: "#222831" }}
-            >
-              <div className="form-group col-md-6">
-                <label htmlFor="reservation_date">Reservation Date:</label>
-                <input
-                  type="date"
-                  name="reservation_date"
-                  className="form-control"
-                  onChange={changeHandler}
-                  defaultValue={reservation.data.reservation_date.slice(0, 10)}
-                  pattern="\d{4}-\d{2}-\d{2}"
-                  required
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="reservation_time">Enter a time:</label>
-                <input
-                  type="time"
-                  name="reservation_time"
-                  className="form-control"
-                  onChange={changeHandler}
-                  defaultValue={reservation.data.reservation_time}
-                  pattern="[0-9]{2}:[0-9]{2}"
-                  required
-                />
-              </div>
-            </div>
-            <div className="text-center">
-              <button type="submit" className="btn btn-info text-dark mr-1">
-                Submit
-              </button>
-              <button
-                className="btn btn-dark text-light ml-1"
-                onClick={cancelHandler}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+          <ReservationForm
+            cancelHandler={cancelHandler}
+            submitHandler={submitHandler}
+            changeHandler={changeHandler}
+            reservation={reservation.data}
+          />
         )}
         <ErrorAlert error={reservationsError} />
       </div>

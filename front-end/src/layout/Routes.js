@@ -5,7 +5,7 @@ import { today } from "../utils/date-time";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import SearchReservation from "../dashboard/SearchReservations";
-import ReservationForm from "../dashboard/ReservationForm";
+import NewReservation from "../dashboard/NewReservation";
 import TablesForm from "../dashboard/TablesForm";
 import SeatReservation from "../dashboard/SeatReservation";
 import EditReservation from "../dashboard/EditReservation";
@@ -26,7 +26,7 @@ export default function Routes() {
         <SearchReservation />
       </Route>
       <Route path="/reservations/new">
-        <ReservationForm />
+        <NewReservation />
       </Route>
       <Route path="/tables/new">
         <TablesForm />
